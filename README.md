@@ -37,7 +37,21 @@ Shared configs live in `tooling/` so future packages can reuse them.
 | `pnpm run format`       | Format the repo with Prettier                  |
 | `pnpm run format:check` | Verify formatting without writing files        |
 
-Husky runs `lint` and `format:check` on every commit via `.husky/pre-commit`.
+Husky runs `lint`, `format:check`, and `test:coverage` on every commit via `.husky/pre-commit`.
+
+### Testing
+
+| Script                   | Description                                    |
+| ------------------------ | ---------------------------------------------- |
+| `pnpm test`              | Run Jest test suite                            |
+| `pnpm run test:watch`    | Run tests in watch mode                        |
+| `pnpm run test:coverage` | Run tests with coverage report (90% threshold) |
+
+**File conventions:** co-located `*.test.ts` or `*.spec.ts` next to source, or files under `__tests__/` directories. All patterns are included by `tsconfig.json` and ESLint.
+
+**Coverage gate:** global coverage must stay at or above **90%** (branches, functions, lines, statements). The threshold is enforced on commit (Husky) and in CI. Pull requests receive an auto-updating coverage comment listing new and changed source files with per-file percentages.
+
+Coverage output is written to `coverage/` (gitignored).
 
 ### Releasing
 
