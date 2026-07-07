@@ -30,7 +30,22 @@ export function createConfig({
     coverageDirectory: "coverage",
     coverageReporters: ["text", "text-summary", "lcov", "json-summary"],
     coverageThreshold: {
+      // `global` enforces the overall floor; the glob keys enforce the same
+      // floor per individual file, so a single under-covered file fails the
+      // run locally (pre-commit) and in CI, not just when the average dips.
       global: {
+        branches: COVERAGE_THRESHOLD,
+        functions: COVERAGE_THRESHOLD,
+        lines: COVERAGE_THRESHOLD,
+        statements: COVERAGE_THRESHOLD,
+      },
+      "src/**/*.ts": {
+        branches: COVERAGE_THRESHOLD,
+        functions: COVERAGE_THRESHOLD,
+        lines: COVERAGE_THRESHOLD,
+        statements: COVERAGE_THRESHOLD,
+      },
+      "build/**/*.ts": {
         branches: COVERAGE_THRESHOLD,
         functions: COVERAGE_THRESHOLD,
         lines: COVERAGE_THRESHOLD,

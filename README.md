@@ -49,7 +49,7 @@ Husky runs `lint`, `format:check`, and `test:coverage` on every commit via `.hus
 
 **File conventions:** co-located `*.test.ts` or `*.spec.ts` next to source, or files under `__tests__/` directories. All patterns are included by `tsconfig.json` and ESLint.
 
-**Coverage gate:** global coverage must stay at or above **90%** (branches, functions, lines, statements). The threshold is enforced on commit (Husky) and in CI. Pull requests receive an auto-updating coverage comment listing new and changed source files with per-file percentages.
+**Coverage gate:** every source file **and** the overall total must stay at or above **90%** (branches, functions, lines, statements). The per-file and global thresholds are enforced by Jest on commit (Husky) and in CI. Pull requests also receive an auto-updating coverage comment listing new and changed source files with per-file percentages.
 
 Coverage output is written to `coverage/` (gitignored).
 

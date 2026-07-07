@@ -1,30 +1,35 @@
-import { existsSync, readFileSync, rmSync } from "node:fs";
-import { join, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const distDir = join(root, "dist");
+import { build } from "./index.js";
 
 describe("build pipeline", () => {
-  beforeAll(async () => {
-    rmSync(distDir, { recursive: true, force: true });
-    await import("./index.js");
+  let outDir: string;
+
+  beforeAll(() => {
+    outDir = mkdtempSync(join(tmpdir(), "willow-build-"));
+    build(outDir);
+  });
+
+  afterAll(() => {
+    rmSync(outDir, { recursive: true, force: true });
   });
 
   it("writes tokens.css with a :root block", () => {
-    const cssPath = join(distDir, "tokens.css");
+    const cssPath = join(outDir, "tokens.css");
     expect(existsSync(cssPath)).toBe(true);
     expect(readFileSync(cssPath, "utf8")).toContain(":root");
   });
 
   it("writes tokens.js exporting an empty tokens object", () => {
-    const jsPath = join(distDir, "tokens.js");
+    const jsPath = join(outDir, "tokens.js");
     expect(existsSync(jsPath)).toBe(true);
     expect(readFileSync(jsPath, "utf8")).toContain("export const tokens");
   });
 
   it("writes tokens.d.ts with a tokens type declaration", () => {
-    const dtsPath = join(distDir, "tokens.d.ts");
+    const dtsPath = join(outDir, "tokens.d.ts");
     expect(existsSync(dtsPath)).toBe(true);
     expect(readFileSync(dtsPath, "utf8")).toContain(
       "export declare const tokens",

@@ -29,6 +29,8 @@ function gitLines(args, opts) {
 /** @param {string} file */
 function isSourceFile(file) {
   if (!file.endsWith(".ts")) return false;
+  // Declaration files carry no executable code and never appear in coverage.
+  if (file.endsWith(".d.ts")) return false;
   if (file.endsWith(".test.ts") || file.endsWith(".spec.ts")) return false;
   if (file.includes("/__tests__/")) return false;
   return true;
@@ -80,7 +82,10 @@ function formatPct(pct) {
 
 /** @param {{ lines: { pct: number }, branches: { pct: number }, functions: { pct: number }, statements: { pct: number } } | null} stats */
 function isBelowThreshold(stats) {
-  if (!stats) return true;
+  // No coverage entry means the file is not instrumented (e.g. a type-only
+  // file with no runtime code). Treat as neutral rather than a failure so it
+  // does not block the PR with a false positive.
+  if (!stats) return false;
   return (
     stats.lines.pct < COVERAGE_THRESHOLD ||
     stats.branches.pct < COVERAGE_THRESHOLD ||
@@ -129,7 +134,8 @@ export function evaluate({
     globalStats.statements.pct >= COVERAGE_THRESHOLD;
 
   const addedFiles = changedSourceFiles(baseRef, "A");
-  const modifiedFiles = changedSourceFiles(baseRef, "M");
+  // Modified, renamed, and copied files all count as "changed" for the report.
+  const modifiedFiles = changedSourceFiles(baseRef, "MRC");
 
   const fileIssues = [...addedFiles, ...modifiedFiles].filter((file) =>
     isBelowThreshold(lookupFileCoverage(summary, file)),
