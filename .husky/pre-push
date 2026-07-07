@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
-# Block pushing changes that touch non-exempt files without a changeset.
-# The exempt-file rules live in scripts/changeset-required.mjs so they only
-# need to be maintained in one place (shared with CI).
+# Block pushing changes that alter the published export without a changeset.
+# The decision (build + pack HEAD vs the base branch, then compare) lives in
+# scripts/changeset-required.mjs so it is maintained in one place (shared with
+# CI). The build + pnpm pack run automatically from here; no manual steps.
 
 # Compare against the local tip of the base branch when it exists, otherwise
 # fall back to the remote-tracking ref.

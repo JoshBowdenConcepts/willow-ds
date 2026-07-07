@@ -23,6 +23,9 @@
     "release": "changeset publish",
     "changeset:check": "node scripts/changeset-required.mjs"
   },
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./dist/tokens.d.ts",
@@ -44,7 +47,6 @@
     "@changesets/cli": "^2.31.0",
     "@types/node": "^22.15.21",
     "husky": "^9.1.7",
-    "micromatch": "^4.0.8",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   }

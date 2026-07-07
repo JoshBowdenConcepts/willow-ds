@@ -67,7 +67,7 @@ jobs:
                 marker,
                 '### 🦋 Changeset required',
                 '',
-                'This PR changes non-documentation files but does not include a changeset.',
+                'This PR changes the published export (the built package differs from the base branch) but does not include a changeset.',
                 '',
                 'Add one by running:',
                 '',

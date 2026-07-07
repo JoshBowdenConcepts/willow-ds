@@ -1,0 +1,53 @@
+---
+description: How to write Willow changeset files, framed around consumer impact
+globs: .changeset/*.md
+alwaysApply: false
+---
+
+# Writing Changesets
+
+A changeset is only required when the **published export changes** (the built
+`dist/` differs from the base branch). It is the release note a consumer reads,
+so write it from the consumer's point of view — what they get, what they must
+do — never about internal build/tooling mechanics.
+
+## Format
+
+```markdown
+---
+"@willow-ds/tokens": minor
+---
+
+Add `--willow-color-primary`, letting consumers theme primary surfaces without overriding component styles.
+```
+
+## Choosing the bump (by consumer impact)
+
+- **major**: a consumer's existing usage breaks — a token is removed or renamed,
+  a value/type changes shape, or an entry point in `exports` is removed.
+- **minor**: consumers gain something backward-compatible — new tokens, a new
+  scope (color mode / breakpoint / feature), or a new export.
+- **patch**: consumer-visible output changes with no API change — a token value
+  is corrected, or a previously-broken artifact now ships correctly.
+
+## Writing the summary
+
+- Lead with the effect on the consumer: what they can now do, or must change.
+- Name the concrete surface: token (`willow.color.primary`), CSS var
+  (`--willow-color-primary`), data-attribute (`data-willow-color-mode`), or
+  export path (`@willow-ds/tokens/css`).
+- For breaking changes, state the migration ("rename X to Y").
+- Omit internals (refactors, the build script, CI, tests). If a change touches
+  only those, no changeset is required.
+
+## Examples
+
+```markdown
+// ✅ GOOD — consumer effect + concrete surface + migration
+Rename `--willow-color-brand` to `--willow-color-primary`. Update any references; the old variable no longer resolves.
+```
+
+```markdown
+// ❌ BAD — describes internals, no consumer value
+Refactor the token build to sort keys and add a fingerprint step.
+```
