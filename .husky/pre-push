@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+# Block pushing changes that touch non-exempt files without a changeset.
+# The exempt-file rules live in scripts/changeset-required.mjs so they only
+# need to be maintained in one place (shared with CI).
+
+# Compare against the local tip of the base branch when it exists, otherwise
+# fall back to the remote-tracking ref.
+if git show-ref --verify --quiet refs/remotes/origin/main; then
+  BASE_REF="origin/main"
+else
+  BASE_REF="main"
+fi
+
+node scripts/changeset-required.mjs "$BASE_REF"

@@ -1,0 +1,39 @@
+---
+description: Willow design system token architecture - prefix, scope model, build outputs, and consumption patterns
+alwaysApply: true
+---
+
+# Willow Token System
+
+Willow is a themable design system. Tokens are the source of truth for styling and are built into consumable artifacts. This work is tracked in the "Token System" GitHub milestone.
+
+## Prefix
+- Every token is namespaced with `willow` to avoid collisions with consumer tokens.
+- CSS variables: `--willow-<category>-<name>` (e.g. `--willow-color-primary`).
+- Data-attributes: `data-willow-*` (e.g. `data-willow-color-mode="dark"`).
+- JS object keys mirror the CSS names via dot notation (e.g. `tokens.color.primary`).
+
+## Build pipeline
+- Custom TypeScript build (NOT Style Dictionary). Source: `src/tokens/` -> build: `build/` -> output: `dist/`.
+- Two outputs from one source of truth:
+  1. CSS files declaring CSS custom properties (primary output).
+  2. A typed JS/TS object (with `.d.ts`) for CSS-in-JS consumers, accessible via dot notation.
+
+## Scope model
+- Tokens take different values by scope. Scope types: color modes (light/dark), breakpoints, and features.
+- The app reacts to scope through `data-willow-*` attributes; breakpoints may use media queries.
+- Scopes are nestable in ANY order. The most-nested (deepest) applicable scope takes precedence, resolved deterministically via the CSS cascade.
+- CSS emits a `:root` base layer plus scoped overrides (`[data-willow-*]` selectors / media queries).
+
+## Consumption
+- Consumable by anyone importing the library (external + internal).
+- `package.json` `exports` expose both the CSS file(s) and the JS token object entry points.
+- Plain CSS: import the CSS and set `data-willow-*` attributes on elements.
+- CSS-in-JS: import the token object and use dot notation.
+
+## Tooling standards
+- Tests: Jest (all code must be tested).
+- Lint/format: ESLint + Prettier.
+
+## Future considerations
+- iOS token export (and later iOS components) is planned; keep the token schema and build model export-agnostic. Currently a research spike only.
