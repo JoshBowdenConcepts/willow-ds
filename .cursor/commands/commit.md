@@ -12,6 +12,8 @@ work and commit the staged changes.
    - Understand what changed and why
 2. **Determine issue reference (optional)**
    - Check the branch name and chat context for a GitHub issue (e.g. `#42`)
+   - Branches follow `joshbowdenconcepts/Issue<N>-<slug>`, so derive `#<N>` from
+     the branch name when present
    - If one isn't already available, optionally ask whether to include it
    - This is optional — commits can be made without an issue reference
 3. **Stage changes (if not already staged)**

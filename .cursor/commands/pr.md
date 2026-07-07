@@ -8,6 +8,7 @@ using the repo's PR template at `.github/pull_request_template.md`.
 ## Steps
 
 1. **Prepare branch**
+   - Ensure work is on a correctly named branch (see **Branch naming** below)
    - Ensure all changes are committed
    - Add a changeset if required (`pnpm changeset`) for any non-docs change
    - Ensure tests, lint, and format pass (`pnpm test`)
@@ -30,6 +31,16 @@ using the repo's PR template at `.github/pull_request_template.md`.
    - Use `gh pr create` with the body populated from the template
    - Add appropriate labels and assign reviewers
    - Return the PR URL
+
+## Branch naming
+
+- **With an issue:** `joshbowdenconcepts/Issue<N>-<slug>`
+- **Without an issue:** `joshbowdenconcepts/<slug>`
+- **Slug:** lowercase the title/summary, drop parenthetical segments, replace
+  non-alphanumeric runs with a single hyphen, collapse/trim hyphens, truncate to
+  ~50 chars at a word boundary. If the branch exists, append `-2`, `-3`, etc.
+- Example: `#5 Add dark mode color tokens` →
+  `joshbowdenconcepts/Issue5-add-dark-mode-color-tokens`
 
 ## Template
 
