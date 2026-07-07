@@ -1,11 +1,21 @@
 {
-  "name": "willow-ds",
+  "name": "@willow-ds/tokens",
   "author": "Josh Bowden",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Willow design system tokens",
+  "private": true,
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
   "packageManager": "pnpm@10.32.1",
   "scripts": {
+    "build": "tsx build/index.ts",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky",
     "changeset": "changeset",
@@ -13,20 +23,29 @@
     "release": "changeset publish",
     "changeset:check": "node scripts/changeset-required.mjs"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.js"
+    },
+    "./css": "./dist/tokens.css"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JoshBowdenConcepts/willow-ds.git"
   },
   "keywords": [],
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/JoshBowdenConcepts/willow-ds/issues"
   },
   "homepage": "https://github.com/JoshBowdenConcepts/willow-ds#readme",
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
+    "@types/node": "^22.15.21",
     "husky": "^9.1.7",
-    "micromatch": "^4.0.8"
+    "micromatch": "^4.0.8",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
   }
 }
