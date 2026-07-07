@@ -21,7 +21,11 @@
     "changeset": "changeset",
     "version": "changeset version",
     "release": "changeset publish",
-    "changeset:check": "node scripts/changeset-required.mjs"
+    "changeset:check": "node scripts/changeset-required.mjs",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "files": [
     "dist"
@@ -45,9 +49,14 @@
   "homepage": "https://github.com/JoshBowdenConcepts/willow-ds#readme",
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
+    "@eslint/js": "^9.28.0",
     "@types/node": "^22.15.21",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
     "husky": "^9.1.7",
+    "prettier": "^3.5.3",
     "tsx": "^4.19.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.33.1"
   }
 }

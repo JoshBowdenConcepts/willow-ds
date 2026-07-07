@@ -58,11 +58,16 @@ function walk(dir) {
   return out;
 }
 
-/** Strip the volatile `version` field so version bumps don't count as changes. */
+/** Strip fields that do not affect the consumer-facing published export. */
 function normalizePackageJson(buffer) {
   const pkg = JSON.parse(buffer.toString("utf8"));
-  delete pkg.version;
-  return Buffer.from(JSON.stringify(pkg));
+  return Buffer.from(
+    JSON.stringify({
+      exports: pkg.exports,
+      files: pkg.files,
+      sideEffects: pkg.sideEffects,
+    }),
+  );
 }
 
 /**
@@ -88,13 +93,17 @@ export function exportFingerprint(cwd) {
     const hash = createHash("sha256");
     for (const abs of walk(pkgDir).sort()) {
       const rel = relative(pkgDir, abs);
-      const content =
-        rel === "package.json"
-          ? normalizePackageJson(readFileSync(abs))
-          : readFileSync(abs);
+      if (rel === "package.json") {
+        hash.update(rel);
+        hash.update("\0");
+        hash.update(normalizePackageJson(readFileSync(abs)));
+        hash.update("\0");
+        continue;
+      }
+      if (!rel.startsWith("dist/")) continue;
       hash.update(rel);
       hash.update("\0");
-      hash.update(content);
+      hash.update(readFileSync(abs));
       hash.update("\0");
     }
     return hash.digest("hex");
@@ -147,7 +156,12 @@ export function evaluate({ baseRef = "origin/main" } = {}) {
 
   // Fast paths that avoid the (relatively) expensive double build.
   if (changedFiles.length === 0) {
-    return { required: false, hasChangeset, changedFiles, reason: "no changes" };
+    return {
+      required: false,
+      hasChangeset,
+      changedFiles,
+      reason: "no changes",
+    };
   }
   if (hasChangeset) {
     // A changeset already satisfies the gate; no need to compute the export.
@@ -195,7 +209,9 @@ function main() {
   try {
     result = evaluate({ baseRef });
   } catch (error) {
-    console.error(`changeset-required: failed to evaluate against "${baseRef}".`);
+    console.error(
+      `changeset-required: failed to evaluate against "${baseRef}".`,
+    );
     console.error(error.message);
     process.exit(1);
   }

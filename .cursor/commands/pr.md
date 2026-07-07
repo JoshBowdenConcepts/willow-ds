@@ -11,7 +11,11 @@ using the repo's PR template at `.github/pull_request_template.md`.
    - Ensure work is on a correctly named branch (see **Branch naming** below)
    - Ensure all changes are committed
    - Add a changeset if required (`pnpm changeset`) for any non-docs change
-   - Ensure tests, lint, and format pass (`pnpm test`)
+   - Ensure tests, lint, and format pass:
+     - `pnpm run lint`
+     - `pnpm run format:check`
+     - `pnpm run typecheck`
+     - `pnpm test` (when tests exist)
    - Push branch to remote and verify it's up to date with `main`
 2. **Gather PR context**
    - Diff against `main` to understand the full scope of changes
