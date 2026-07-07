@@ -38,3 +38,10 @@ Shared configs live in `tooling/` so future packages can reuse them.
 | `pnpm run format:check` | Verify formatting without writing files        |
 
 Husky runs `lint` and `format:check` on every commit via `.husky/pre-commit`.
+
+### Releasing
+
+Consumer-facing changes require a changeset (`pnpm changeset`) in the PR. After merge to `main`:
+
+1. The **release** workflow opens a **Version Packages** PR with `package.json` version bumps and `CHANGELOG.md` updates.
+2. Merging that PR creates a git tag and [GitHub release](https://github.com/JoshBowdenConcepts/willow-ds/releases). Packages are not published to npm yet.
