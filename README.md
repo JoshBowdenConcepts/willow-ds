@@ -6,7 +6,7 @@ Willow is a themable design system. This repository hosts its packages.
 
 Design tokens are the source of truth for styling. They are built into CSS custom properties and a typed JS object for consumers.
 
-The authoring contract (format, categories, naming rules, and aliases) is documented in [docs/token-schema.md](docs/token-schema.md).
+The authoring contract (format, categories, naming rules, and aliases) is documented in [docs/token-schema.md](docs/token-schema.md). The scope model (color modes, breakpoints, features, their `data-willow-*` attributes, and precedence rules) is documented in [docs/scope-model.md](docs/scope-model.md).
 
 ### Folder layout
 
