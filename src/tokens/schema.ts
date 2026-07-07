@@ -56,11 +56,34 @@ export interface TokenValueMap {
  */
 export type Alias = `{${string}}`;
 
+/**
+ * Scope-specific overrides for a leaf token. Each key is a scope selector
+ * (`scope-type:value`, optionally combined with `&`) as defined in
+ * `docs/scope-model.md`; each value is a concrete value or {@link Alias} of the
+ * same `$type` as the base token. The base `$value` always applies when no
+ * scope matches, so a token is fully defined without any scope.
+ *
+ * @example
+ * {
+ *   $type: "color",
+ *   $value: ref("color.neutral.0"),
+ *   $scopes: {
+ *     "color-mode:dark": ref("color.neutral.900"),
+ *     "color-mode:dark & breakpoint:lg": "#f5f5f5",
+ *   },
+ * }
+ */
+export type TokenScopes<T extends TokenType = TokenType> = Partial<
+  Record<string, TokenValueMap[T] | Alias>
+>;
+
 /** A single leaf token of a given {@link TokenType}. */
 export interface Token<T extends TokenType = TokenType> {
   $type: T;
   /** A concrete value for `$type`, or an {@link Alias} to another token. */
   $value: TokenValueMap[T] | Alias;
+  /** Optional per-scope overrides keyed by scope selector. */
+  $scopes?: TokenScopes<T>;
   $description?: string;
 }
 
