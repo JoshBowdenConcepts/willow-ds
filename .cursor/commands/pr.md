@@ -17,10 +17,15 @@ using the repo's PR template at `.github/pull_request_template.md`.
    - Capture before/after screenshots for any visual or UI change
 3. **Write the description**
    - Fill out every section of `.github/pull_request_template.md`
-   - Write a title that is short and imperative (e.g. "Add dark mode color tokens")
+   - Write the title as `[<issue #>] <short imperative summary>`
+     (e.g. `[42] Add dark mode color tokens`). If the work does not fix or
+     relate to an issue, use `[No Issue]` instead (e.g.
+     `[No Issue] Add dark mode color tokens`)
+   - In the **Related** section, link the issue this PR fixes with a closing
+     keyword when applicable (e.g. `Closes #42`). Omit if there is no issue
    - Delete template checklist items that don't apply; check the ones that do
    - Flag breaking changes and include a migration path for consumers
-   - Link related issues and the relevant milestone (e.g. "Token System")
+   - Link the relevant milestone (e.g. "Token System")
 4. **Create the PR**
    - Use `gh pr create` with the body populated from the template
    - Add appropriate labels and assign reviewers
