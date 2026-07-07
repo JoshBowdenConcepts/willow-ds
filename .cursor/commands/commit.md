@@ -1,34 +1,41 @@
-# Git Create Commit
+# Create Commit
 
 ## Overview
 
-Create a short, focused commit message and commit staged changes.
+Create a short, focused, conventional commit for **front-end / design-system**
+work and commit the staged changes.
 
 ## Steps
 
 1. **Review changes**
-   - Check the diff: `git diff --cached` (if changes are staged) or `git diff` (if unstaged)
+   - Check the diff: `git diff --cached` (staged) or `git diff` (unstaged)
    - Understand what changed and why
-2. **Ask for issue key (optional)**
-   - Check the branch name for an issue key (Linear, Jira, GitHub issue, etc.)
-   - If an issue key (e.g., POW-123, PROJ-456, #123) is not already available in the chat or commit context, optionally ask the user if they want to include one
-   - This is optional - commits can be made without an issue key
+2. **Determine issue reference (optional)**
+   - Check the branch name and chat context for a GitHub issue (e.g. `#42`)
+   - If one isn't already available, optionally ask whether to include it
+   - This is optional — commits can be made without an issue reference
 3. **Stage changes (if not already staged)**
    - `git add -A`
-4. **Create short commit message**
-   - Base the message on the actual changes in the diff
-   - Example: `git commit -m "fix(auth): handle expired token refresh"`
-   - Example with issue key: `git commit -m "PROJ-123: fix(auth): handle expired token refresh"`
+4. **Write the commit message**
+   - Base it on the actual changes in the diff, describing the "why"
+   - Example: `git commit -m "fix(tokens): handle missing dark mode value"`
+   - With issue: `git commit -m "fix(tokens): handle missing dark mode value (#42)"`
 
 ## Template
 
+The commit follows Conventional Commits so history stays consistent with the
+`/pr` flow and changesets. Format:
+
 - `git commit -m "<type>(<scope>): <short summary>"`
-- With issue key: `git commit -m "<issue-key>: <type>(<scope>): <short summary>"`
+- With issue: `git commit -m "<type>(<scope>): <short summary> (#<issue>)"`
+
+Common `<type>` values (mirror the PR "Type of change"): `feat`, `fix`,
+`refactor`, `style`, `build`, `docs`, `chore`.
 
 ## Rules
 
-- **Length:** <= 72 characters
-- **Imperative mood:** Use "fix", "add", "update" (not "fixed", "added", "updated")
-- **Capitalize:** First letter of summary should be capitalized
-- **No period:** Don't end the subject line with a period
-- **Describe why:** Not just what - "fix stuff" is meaningless
+- **Length** — subject line <= 72 characters
+- **Imperative mood** — "fix", "add", "update" (not "fixed", "added")
+- **Capitalize** — first letter of the summary
+- **No period** — don't end the subject line with a period
+- **Describe why** — not just what; "fix stuff" is meaningless
