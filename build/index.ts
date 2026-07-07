@@ -7,7 +7,10 @@ const distDir = join(root, "dist");
 
 mkdirSync(distDir, { recursive: true });
 
-writeFileSync(join(distDir, "tokens.css"), ":root {\n  /* willow tokens */\n}\n");
+writeFileSync(
+  join(distDir, "tokens.css"),
+  ":root {\n  /* willow tokens */\n}\n",
+);
 writeFileSync(join(distDir, "tokens.js"), "export const tokens = {};\n");
 writeFileSync(
   join(distDir, "tokens.d.ts"),

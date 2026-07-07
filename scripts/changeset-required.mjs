@@ -147,7 +147,12 @@ export function evaluate({ baseRef = "origin/main" } = {}) {
 
   // Fast paths that avoid the (relatively) expensive double build.
   if (changedFiles.length === 0) {
-    return { required: false, hasChangeset, changedFiles, reason: "no changes" };
+    return {
+      required: false,
+      hasChangeset,
+      changedFiles,
+      reason: "no changes",
+    };
   }
   if (hasChangeset) {
     // A changeset already satisfies the gate; no need to compute the export.
@@ -195,7 +200,9 @@ function main() {
   try {
     result = evaluate({ baseRef });
   } catch (error) {
-    console.error(`changeset-required: failed to evaluate against "${baseRef}".`);
+    console.error(
+      `changeset-required: failed to evaluate against "${baseRef}".`,
+    );
     console.error(error.message);
     process.exit(1);
   }

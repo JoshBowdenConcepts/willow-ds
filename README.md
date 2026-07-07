@@ -8,11 +8,11 @@ Design tokens are the source of truth for styling. They are built into CSS custo
 
 ### Folder layout
 
-| Path | Purpose |
-|------|---------|
-| `src/tokens/` | Token source files |
-| `build/` | Custom TypeScript build pipeline |
-| `dist/` | Generated output (CSS + JS/TS); gitignored |
+| Path          | Purpose                                    |
+| ------------- | ------------------------------------------ |
+| `src/tokens/` | Token source files                         |
+| `build/`      | Custom TypeScript build pipeline           |
+| `dist/`       | Generated output (CSS + JS/TS); gitignored |
 
 ### Requirements
 
@@ -20,10 +20,21 @@ Design tokens are the source of truth for styling. They are built into CSS custo
 
 ### Scripts
 
-| Script | Description |
-|--------|-------------|
-| `pnpm run build` | Run the token build pipeline |
-| `pnpm run clean` | Remove generated `dist/` output |
-| `pnpm run typecheck` | Type-check `src/` and `build/` |
+| Script               | Description                     |
+| -------------------- | ------------------------------- |
+| `pnpm run build`     | Run the token build pipeline    |
+| `pnpm run clean`     | Remove generated `dist/` output |
+| `pnpm run typecheck` | Type-check `src/` and `build/`  |
 
-Test and lint tooling will be added in separate tickets.
+### Linting & formatting
+
+Shared configs live in `tooling/` so future packages can reuse them.
+
+| Script                  | Description                                    |
+| ----------------------- | ---------------------------------------------- |
+| `pnpm run lint`         | Run ESLint on `src/`, `build/`, and test files |
+| `pnpm run lint:fix`     | Auto-fix ESLint issues where possible          |
+| `pnpm run format`       | Format the repo with Prettier                  |
+| `pnpm run format:check` | Verify formatting without writing files        |
+
+Husky runs `lint` and `format:check` on every commit via `.husky/pre-commit`.
