@@ -16,10 +16,16 @@ describe("build pipeline", () => {
     rmSync(outDir, { recursive: true, force: true });
   });
 
-  it("writes tokens.css with a :root block", () => {
+  it("writes tokens.css with a :root block and real token declarations", () => {
     const cssPath = join(outDir, "tokens.css");
     expect(existsSync(cssPath)).toBe(true);
-    expect(readFileSync(cssPath, "utf8")).toContain(":root");
+    const css = readFileSync(cssPath, "utf8");
+    expect(css).toContain(":root");
+    expect(css).toContain("--willow-color-background-primary:");
+    expect(css).toContain('[data-willow-color-mode="dark"]');
+    expect(css).toMatch(
+      /\[data-willow-color-mode="dark"\][\s\S]*--willow-color-background-primary: var\(--willow-color-neutral-900\);/,
+    );
   });
 
   it("writes tokens.js exporting an empty tokens object", () => {
