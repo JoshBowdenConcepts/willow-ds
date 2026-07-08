@@ -14,6 +14,9 @@ export const semantic = defineTokens({
         $type: "color",
         $value: ref("color.neutral.0"),
         $description: "Default page/surface background.",
+        $scopes: {
+          "color-mode:dark": ref("color.neutral.900"),
+        },
       },
       inverse: { $type: "color", $value: ref("color.neutral.900") },
     },
@@ -22,6 +25,9 @@ export const semantic = defineTokens({
         $type: "color",
         $value: ref("color.neutral.900"),
         $description: "Default body text.",
+        $scopes: {
+          "color-mode:dark": ref("color.neutral.0"),
+        },
       },
       muted: { $type: "color", $value: ref("color.neutral.600") },
       onBrand: { $type: "color", $value: ref("color.neutral.0") },
